@@ -34,5 +34,12 @@ def icon_path(name: str) -> str:
     return os.path.join(DIST_PATH, name)
 
 
+def user_config_home() -> str:
+    xdg = os.getenv('XDG_CONFIG_HOME', '').strip()
+    if xdg:
+        return os.path.abspath(os.path.expanduser(xdg))
+    return os.path.join(os.path.expanduser('~'), '.config')
+
+
 def conf_dir() -> str:
-    return os.path.join(os.getenv('HOME', ''), '.kblueproximity')
+    return os.path.join(user_config_home(), 'kblueproximity')

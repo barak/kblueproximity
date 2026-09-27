@@ -12,7 +12,20 @@ Have a look at the package documentation in your distribution's doc directory, l
 .PP
 .B kblueproximity
 stores its configuration under
-.I ~/.kblueproximity/
+.I $XDG_CONFIG_HOME/kblueproximity/
+(default:
+.I ~/.config/kblueproximity/
+).
+.PP
+As an alternative to desktop startup applications,
+.B kblueproximity.service
+can be enabled per user.
+.PP
+The unit is installed but not enabled by default. For setup commands and
+details, see
+.BR kblueproximity.service (8).
+.SH SEE ALSO
+.BR kblueproximity.service (8)
 .SH AUTHOR
 KBlueProximity is maintained by Marco Faenzi <marco@faenzi.it>.
 .PP
