@@ -1,0 +1,27 @@
+.TH "KBLUEPROXIMITY.SERVICE" "8" "September 27, 2026" "Marco Faenzi" ""
+.SH NAME
+kblueproximity.service \- systemd user unit for kblueproximity
+.SH SYNOPSIS
+.B systemctl --user enable --now kblueproximity.service
+.br
+.B systemctl --user disable --now kblueproximity.service
+.SH DESCRIPTION
+.B kblueproximity.service
+is a user service unit for running
+.BR kblueproximity (1)
+inside the user systemd manager.
+.PP
+The package installs this unit but does not enable or start it automatically.
+Users must opt in explicitly.
+.SH EXAMPLES
+Enable and start for the current user:
+.IP
+.B systemctl --user enable --now kblueproximity.service
+.PP
+Stop and disable for the current user:
+.IP
+.B systemctl --user disable --now kblueproximity.service
+.SH SEE ALSO
+.BR kblueproximity (1),
+.BR systemctl (1),
+.BR systemd.unit (5)

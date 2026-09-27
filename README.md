@@ -10,7 +10,9 @@ most likely your mobile phone, and keeping track of its distance.
 >## Note ##
 >**KBlueProximity** is the Qt6 / KDE fork of BlueProximity (PySide6).
 GTK3, Glade and Ayatana AppIndicator have been removed. Existing configs
-from `~/.blueproximity/` are copied to `~/.kblueproximity/` on first run.
+from `~/.kblueproximity/` and `~/.blueproximity/` are copied to the XDG
+config directory on first run. If no config files are present there, legacy
+`~/.kblueproximityrc` / `~/.blueproximityrc` are imported as `standard.conf`.
 
 ## Description from the original author
 >If you move away from your computer and the distance is above
@@ -52,9 +54,25 @@ On Plasma 6 the default lock/unlock commands use `loginctl` and the
 freedesktop ScreenSaver D-Bus interface via `qdbus6`. Pair your phone
 via Bluetooth and configure its MAC address in Preferences.
 
+### Optional user systemd service
+
+As an alternative to desktop startup applications, enable the user unit:
+
+```sh
+systemctl --user daemon-reload
+systemctl --user enable --now kblueproximity.service
+```
+
+To disable it:
+
+```sh
+systemctl --user disable --now kblueproximity.service
+```
+
 ## Configuration
 
-Settings live in `~/.kblueproximity/*.conf` (ConfigObj).
+Settings live in `$XDG_CONFIG_HOME/kblueproximity/*.conf` (default:
+`~/.config/kblueproximity/*.conf`) (ConfigObj).
 
 ## Translations
 

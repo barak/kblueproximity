@@ -1,0 +1,12 @@
+[Unit]
+Description=KBlueProximity (user session)
+Documentation=https://github.com/marcofaenzi/kblueproximity
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kblueproximity
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target
