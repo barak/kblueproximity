@@ -91,6 +91,9 @@ class KBlueProximityApp(QObject):
         self._scan_worker = None
         self._channel_thread = None
         self._channel_worker = None
+        self.tray = None
+        self._tray_available = False
+        self._show_no_tray_warning = False
         self.behavior = load_behavior()
 
         self.prefs = PreferencesWindow(self)
@@ -121,19 +124,30 @@ class KBlueProximityApp(QObject):
         self.state_timer.timeout.connect(self.update_state)
         self.state_timer.start(1000)
 
-        if show_window_on_start:
+        if show_window_on_start or not self._tray_available:
             self.show_preferences()
+        if self._show_no_tray_warning:
+            QTimer.singleShot(0, self._show_no_tray_message)
+
+    def _show_no_tray_message(self):
+        if not self._show_no_tray_warning:
+            return
+        self._show_no_tray_warning = False
+        QMessageBox.warning(
+            QApplication.activeWindow(),
+            'KBlueProximity',
+            _('System tray is not available on this desktop.'),
+        )
 
     def _build_tray(self):
         if not QSystemTrayIcon.isSystemTrayAvailable():
-            QMessageBox.critical(
-                None,
-                'KBlueProximity',
-                _('System tray is not available on this desktop.'),
-            )
-            sys.exit(1)
+            self.tray = None
+            self._tray_available = False
+            self._show_no_tray_warning = True
+            return
 
         self.tray = QSystemTrayIcon(self)
+        self._tray_available = True
         self.tray.setIcon(QIcon(icon_path(ICON_ERROR)))
         self.tray.setToolTip('KBlueProximity')
         self.tray.activated.connect(self._tray_activated)
@@ -161,6 +175,8 @@ class KBlueProximityApp(QObject):
         self._update_pause_action()
 
     def _apply_behavior(self):
+        if not self.tray:
+            return
         hide_tray = bool(self.behavior.get('hide_systray'))
         if hide_tray:
             self.tray.hide()
@@ -176,6 +192,8 @@ class KBlueProximityApp(QObject):
             self.behavior[key] = value
         save_behavior(self.behavior)
         self.prefs.read_behavior(self.behavior)
+        if not self.tray:
+            return
         hide_tray = bool(self.behavior.get('hide_systray'))
         if hide_tray:
             self.tray.hide()
@@ -199,6 +217,8 @@ class KBlueProximityApp(QObject):
             self.toggle_pause()
 
     def _update_pause_action(self):
+        if not hasattr(self, 'act_pause'):
+            return
         if self.pause_mode:
             self.act_pause.setText(_('Resume'))
         else:
@@ -214,6 +234,8 @@ class KBlueProximityApp(QObject):
     def on_prefs_closed(self):
         for config in self.configs:
             config[2].Simulate = False
+        if not self._tray_available:
+            self.quit()
 
     def toggle_pause(self):
         if self.pause_mode:
@@ -436,8 +458,9 @@ class KBlueProximityApp(QObject):
             -self.min_dist, -self.max_dist, self.proxi.State, -new_val)
 
         if self.pause_mode:
-            self.tray.setIcon(QIcon(icon_path(ICON_PAUSE)))
-            self.tray.setToolTip(_('KBlueProximity\n-- PAUSED --'))
+            if self.tray:
+                self.tray.setIcon(QIcon(icon_path(ICON_PAUSE)))
+                self.tray.setToolTip(_('KBlueProximity\n-- PAUSED --'))
             return
 
         distance = -new_val
@@ -456,8 +479,9 @@ class KBlueProximityApp(QObject):
                     if new_val < config[2].active_limit:
                         if connection_state < 1:
                             connection_state = 1
-        self.tray.setIcon(QIcon(icon_path(con_icons[connection_state])))
-        self.tray.setToolTip(tooltip)
+        if self.tray:
+            self.tray.setIcon(QIcon(icon_path(con_icons[connection_state])))
+            self.tray.setToolTip(tooltip)
 
     def show_about(self):
         about = QMessageBox(
@@ -487,7 +511,8 @@ class KBlueProximityApp(QObject):
             config[2].logger.log_line(_('stopped.'))
             config[2].Stop = True
         self.state_timer.stop()
-        self.tray.hide()
+        if self.tray:
+            self.tray.hide()
         QApplication.instance().quit()
 
 
