@@ -1,11 +1,19 @@
 KBlueProximity
 --------------
 
-Configuration is stored in ~/.kblueproximity/ as ConfigObj files.
+Configuration is stored in $XDG_CONFIG_HOME/kblueproximity/ as ConfigObj
+files (default: ~/.config/kblueproximity/).
 
-On first run, existing settings from the legacy BlueProximity directory
-~/.blueproximity/ are copied if present.
+On first run, existing settings from legacy directories ~/.kblueproximity/
+and ~/.blueproximity/ are copied if present.
 
 Pair a Bluetooth device with BlueZ first, then set its MAC address in
 Preferences. Default lock/unlock commands use loginctl; Plasma can also
 use the freedesktop ScreenSaver interface via qdbus6.
+
+As a modern autostart alternative, a user systemd unit is installed at:
+/usr/lib/systemd/user/kblueproximity.service
+
+Enable it with:
+  systemctl --user daemon-reload
+  systemctl --user enable --now kblueproximity.service

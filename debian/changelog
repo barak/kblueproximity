@@ -8,5 +8,7 @@ kblueproximity (2.2.3-1) unstable; urgency=medium
   * Sponsor package (closes: 1146706)
   * Bump to standards version 4.7.4, with misc updates
   * Bump to debhelper 14, with misc updates
+  * Install systemd user service file
+  * Install html manual
 
- -- Barak A. Pearlmutter <bap@debian.org>  Sun, 27 Sep 2026 13:16:00 +0100
+ -- Barak A. Pearlmutter <bap@debian.org>  Sun, 27 Sep 2026 20:53:13 +0100

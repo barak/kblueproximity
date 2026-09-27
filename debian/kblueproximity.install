@@ -9,3 +9,4 @@ addons/kblueproximity usr/bin/
 addons/kblueproximity.desktop usr/share/applications/
 addons/it.faenzi.kblueproximity.metainfo.xml usr/share/metainfo/
 addons/kblueproximity.xpm usr/share/pixmaps/
+addons/kblueproximity.service usr/lib/systemd/user/

@@ -1,0 +1,9 @@
+Document: blueproximity-manual
+Title: BlueProximity Manual
+Author: Lars Friedrichs
+Abstract: How to use the BlueProximity system
+Section: Screen
+
+Format: HTML
+Index: /usr/share/doc/kblueproximity/manual.html
+Files: /usr/share/doc/kblueproximity/manual_html_*.png
