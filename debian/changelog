@@ -1,6 +1,0 @@
-kblueproximity (2.2.3-1) unstable; urgency=medium
-
-  * Initial Debian release.
-  * AppStream metainfo, Policy-compliant desktop file, and quilt source format.
-
- -- Marco Faenzi <marco@faenzi.it>  Fri, 04 Sep 2026 17:35:00 +0200
