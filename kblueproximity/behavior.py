@@ -17,7 +17,9 @@ AUTOSTART_FILENAME = 'kblueproximity.desktop'
 
 
 def autostart_dir() -> str:
-    return os.path.join(os.getenv('HOME', ''), '.config', 'autostart')
+    xdg_config_home = os.getenv('XDG_CONFIG_HOME', '~/.config')
+    base = os.path.abspath(os.path.expanduser(xdg_config_home))
+    return os.path.join(base, 'autostart')
 
 
 def autostart_path() -> str:
