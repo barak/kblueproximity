@@ -23,12 +23,9 @@ override_dh_auto_install:
 	install -m 644 LANG/en/LC_MESSAGES/kblueproximity.mo \
 		debian/kblueproximity/usr/share/kblueproximity/LANG/en/LC_MESSAGES/
 
-override_dh_install:
-	dh_install
-	find debian/kblueproximity -type d -name __pycache__ -exec rm -rf {} +
+execute_after_dh_install:
+	@echo "Removing stray __pycache__ directories."
+	find debian/kblueproximity -type d -name __pycache__ -ls -exec rm -rf {} +
 
 override_dh_python3:
 	dh_python3 /usr/share/kblueproximity
-
-override_dh_installchangelogs:
-	dh_installchangelogs ChangeLog

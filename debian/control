@@ -1,21 +1,19 @@
 Source: kblueproximity
 Section: utils
 Maintainer: Marco Faenzi <marco@faenzi.it>
-Build-Depends: debhelper-compat (= 13),
+Build-Depends: debhelper-compat (= 14),
+               dh-sequence-single-binary,
                dh-python,
                gettext,
                python3
-Standards-Version: 4.7.3
-Rules-Requires-Root: no
+Standards-Version: 4.7.4
 Homepage: https://github.com/marcofaenzi/kblueproximity
 Vcs-Git: https://github.com/marcofaenzi/kblueproximity.git
 Vcs-Browser: https://github.com/marcofaenzi/kblueproximity
 
 Package: kblueproximity
 Architecture: all
-Depends: ${misc:Depends},
-         ${python3:Depends},
-         python3-pyside6.qtcore,
+Depends: python3-pyside6.qtcore,
          python3-pyside6.qtgui,
          python3-pyside6.qtwidgets,
          python3-configobj,
